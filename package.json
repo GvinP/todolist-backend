@@ -4,7 +4,8 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "nodemon --inspect index.js"
+    "start": "node index.js",
+    "dev": "nodemon --inspect index.js"
   },
   "license": "MIT",
   "dependencies": {

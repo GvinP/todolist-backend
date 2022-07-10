@@ -5,8 +5,8 @@ class TodoController {
     async addTodo(req, res) {
         try {
             const {title} = req.body
-            // const userId = req.user.id
-            const todo = new Todo({userId: '62c6e23ae38bc43686842a9a', title})
+            const userId = req.user.id
+            const todo = new Todo({userId, title})
             await todo.save()
             res.json(todo)
         } catch (e) {
@@ -24,6 +24,28 @@ class TodoController {
         }
     }
 
+    async deleteTodo(req, res) {
+        try {
+            const todoId = req.params.todoId
+            await Task.deleteMany({todoId})
+            await Todo.deleteOne({_id: todoId})
+            res.json('Todo deleted')
+        } catch (e) {
+            res.status(400).json({message: 'Todo delete error'})
+        }
+    }
+    async updateTodo(req, res) {
+        try {
+            const todoId = req.params.todoId
+            const {title} = req.body
+            if (title) {
+                await Todo.updateOne({_id: todoId}, {title})
+            }
+            res.json('Todo updated')
+        } catch (e) {
+            res.status(400).json({message: 'Todo update error'})
+        }
+    }
     async getTask(req, res) {
         try {
             const todoId = req.params.todoId
@@ -47,7 +69,6 @@ class TodoController {
     async deleteTask(req, res) {
         try {
             const taskId = req.params.taskId
-            console.log(taskId)
             await Task.deleteOne({_id: taskId})
             res.json('Task deleted')
         } catch (e) {
@@ -58,10 +79,13 @@ class TodoController {
         try {
             const taskId = req.params.taskId
             const {title} = req.body
-            console.log(title)
-            console.log(taskId)
-            const updatedTask = await Task.updateOne({_id: taskId}, {title})
-            console.log(updatedTask)
+            const {status} = req.body
+            if (title) {
+                await Task.updateOne({_id: taskId}, {title})
+            }
+            if (status) {
+                await Task.updateOne({_id: taskId}, {status})
+            }
             res.json('Task updated')
         } catch (e) {
             res.status(400).json({message: 'Task update error'})

@@ -16,7 +16,8 @@ class TodoController {
 
     async getTodo(req, res) {
         try {
-            const todos = await Todo.find() //{userId: req.user.id}
+            const userId = req.user.id
+            const todos = await Todo.find({userId}) //{userId: req.user.id}
             res.json(todos)
         } catch (e) {
             res.status(400).json({message: 'Todo error'})
@@ -48,8 +49,6 @@ class TodoController {
             const taskId = req.params.taskId
             console.log(taskId)
             await Task.deleteOne({_id: taskId})
-            // const task = new Task({todoId: todoId, title})
-            // await task.save()
             res.json('Task deleted')
         } catch (e) {
             res.status(400).json({message: 'Task error'})

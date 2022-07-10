@@ -5,9 +5,9 @@ const authMiddleware = require('./middlewares/authMiddleware')
 const todoRouter = new Router()
 
 todoRouter.post('/', controller.addTodo)
-todoRouter.get('/', controller.getTodo)
+todoRouter.get('/', authMiddleware, controller.getTodo)
 todoRouter.post(`/:todoId/tasks`, controller.addTask)
-todoRouter.get(`/:todoId/tasks`, controller.getTask)
+todoRouter.get(`/:todoId/tasks`, authMiddleware, controller.getTask)
 todoRouter.delete(`/:todoId/tasks/:taskId`, controller.deleteTask)
 todoRouter.put(`/:todoId/tasks/:taskId`, controller.updateTask)
 

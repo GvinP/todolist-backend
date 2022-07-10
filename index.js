@@ -5,7 +5,7 @@ const authRouter = require("./authRouter.js");
 const todoRouter = require("./todoRouter.js");
 const cors = require('cors')
 
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 5000
 const password = 'dVwCN91T6x4IuQ2H'
 const DB_URL = `mongodb+srv://gvinpin:${password}@cluster0.ifctz.mongodb.net/?retryWrites=true&w=majority`
 
